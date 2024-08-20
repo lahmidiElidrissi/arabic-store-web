@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@100..900&family=Noto+Sans+Arabic:wght@100..900&display=swap');
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+      font-family: "Noto Sans Arabic", sans-serif;
+    }
+    .text-black{
+      color : #090e34 !important;
+    }
+    .text-black{
+      color : #090e34 !important;
+    }
+    .text-body-color {
+      color: rgb(149 156 177);
+    }
+  }
+  
