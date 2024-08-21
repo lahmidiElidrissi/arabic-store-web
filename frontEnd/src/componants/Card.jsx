@@ -54,7 +54,6 @@ export default function Card() {
             <h1 className='my-3 md:my-5 text-[20px] md:text-2xl'>
               اجمالي الاسعار : {products && (products.length > 0) ? totalPrices(products) : 0} دم
             </h1>
-            <hr />
           </div>
           <div className='w-full m-5 flex justify-center items-center'>
             <button className='bg-yellow-600 text-white p-1 rounded w-[50%]' onClick={ orderFromCard }> طلب الآن </button>

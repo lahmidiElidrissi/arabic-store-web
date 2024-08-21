@@ -43,7 +43,10 @@ export default function OrderPage() {
                         }).showToast();
                         dispatch(emptyCard());
                         // redirect to thanks page
-                        navigate('/');
+                        let url = makeOrderUrl(fullNameOrder , adresseOrder);
+                        navigate( '/');
+                        window.location.href = url;
+                        
                 })
                 .catch(error => {
                     console.error('Error submitting order', error);
@@ -70,6 +73,20 @@ export default function OrderPage() {
         }
       };
 
+    const makeOrderUrl = (fullNameOrder , adresseOrder) => {
+
+        let url = `https://wa.me/+212690591681?text=طلب جديد : %0D%0Aالاسم الكامل : ${fullNameOrder}%0D%0Aالعنوان : ${adresseOrder}%0D%0Aمنتجات:%0D%0A
+        %0D%0A`;
+        products.forEach((product) => {
+            url +=`%0D%0Aاسم المنتج : ${product.name}%0D%0Aكمية : ${product.pivot.quantity}%0D%0Aرابط المنتج : ${import.meta.env.VITE_URL_FRONT_END}/product/${product.id}`;
+            url += `%0D%0A
+            %0D%0A`;
+        });
+        url += `%0D%0Aالمجموع : ${total}دم`;
+
+        return url
+    }  
+
     return (
         <div className='container border-t border-slate-200'>
             <div className='flex flex-wrap min-h-screen my-[50px]'>
@@ -83,7 +100,6 @@ export default function OrderPage() {
                         <h1 className='my-3 md:my-5 text-[20px] md:text-2xl text-green-800'>
                             المجموع : {products && (products.length > 0) ? total : 0} دم
                         </h1>
-                        <hr />
                     </div>
 
                     <form className='flex flex-wrap w-full justify-center space-y-5 mt-5'>

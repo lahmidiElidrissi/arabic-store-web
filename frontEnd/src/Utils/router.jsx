@@ -7,6 +7,7 @@ import Card from "../componants/Card";
 import Login from "../componants/Login";
 import GoogleCallback from "../componants/GoogleCallback";
 import OrderPage from "../componants/OrderPage";
+import OrderComplated from "../componants/orderComplated";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/order",
         element: <OrderPage />,
+      },
+      {
+        path: "/order/complated",
+        element: <OrderComplated />,
       },
     ]
   },

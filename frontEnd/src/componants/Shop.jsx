@@ -16,6 +16,10 @@ export default function Shop() {
     // get products when current page changed
     useEffect(() => {
         getProducts();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // for smooth scrolling
+        });
     }, [currentPage]);
 
     const handlePageChange = (page) => {

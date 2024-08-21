@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import { useEffect } from "react";
@@ -11,13 +11,23 @@ export default function RootLayout() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.card.status);
   const error = useSelector((state) => state.card.error);
-  
+  const location = useLocation();
 
+  useEffect(() => {
+    const handleNavigation = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // for smooth scrolling
+      });
+    };
+    handleNavigation(); 
+  }, [location]); 
+
+  
   useEffect(() => {
     if (status === 'idle') {
       dispatch(fetchProducts());
     }
-    console.log(error);
 
     // add login request
     if (localStorage.getItem("access_token") == null && status === "idle") {
