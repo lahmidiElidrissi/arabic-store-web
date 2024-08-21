@@ -41,10 +41,13 @@ export default function OrderPage() {
                                 width: "70%",
                             },
                         }).showToast();
+                        // empty card
                         dispatch(emptyCard());
-                        // redirect to thanks page
-                        let url = makeOrderUrl(fullNameOrder , adresseOrder);
+                        // make order url with whatsapp
+                        let url = makeOrderUrlWithWhatsapp(fullNameOrder , adresseOrder);
+                        // redirect to home
                         navigate( '/');
+                        // redirect to order using whatsapp
                         window.location.href = url;
                         
                 })
@@ -73,7 +76,7 @@ export default function OrderPage() {
         }
       };
 
-    const makeOrderUrl = (fullNameOrder , adresseOrder) => {
+    const makeOrderUrlWithWhatsapp = (fullNameOrder , adresseOrder) => {
 
         let url = `https://wa.me/+212690591681?text=طلب جديد : %0D%0Aالاسم الكامل : ${fullNameOrder}%0D%0Aالعنوان : ${adresseOrder}%0D%0Aمنتجات:%0D%0A
         %0D%0A`;

@@ -76,12 +76,12 @@ export default function Shop() {
                                     setCurrentPage(1);
                                 }} 
                                 ref={inputSearch} />
-
-                                <select className='w-full' onChange={(e) => {
+                                <h3 className='mb-4'> الترتيب حسب الفئة : </h3>
+                                <select className='w-full border border-slate-300 rounded' onChange={(e) => {
                                     getProducts();
                                     setCurrentPage(1);}
                                     } ref={categoriesSelect}>
-                                    <option value="">الترتيب حسب الفئة</option>
+                                    <option className='select:bg-slate-200' value=""> كل الفئات </option>
                                     {categories.map((category) => (
                                         <option key={category.id} value={category.id}>{category.name}</option>
                                     ))}

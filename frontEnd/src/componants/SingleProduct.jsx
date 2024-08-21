@@ -11,7 +11,7 @@ const SingleProduct = ({ product }) => {
   const dispatch = useDispatch()
 
   const addToCart = (product) => {
-    dispatch( addProductToAPI( product ) )
+    dispatch(addProductToAPI(product))
   }
 
   return (
@@ -20,7 +20,7 @@ const SingleProduct = ({ product }) => {
         className="wow fadeInUp relative overflow-hidden rounded-md bg-[#4a6cf708] shadow-one dark:bg-dark"
         data-wow-delay=".1s"
       >
-          <Link
+        <Link
           to={`/product/${id}`}>
           <img className="w-[190px] max-w-[190px] md:w-[250px] md:max-w-[250px]" src={images[0].path} alt="image" />
         </Link>
@@ -41,15 +41,15 @@ const SingleProduct = ({ product }) => {
             <span className="p-1 font-bold text-slate-800 me-2 rounded bg-opacity-80">  {price} دم </span>
           </p>
 
-            <div className="flex flex-wrap">
-              <Link to={`/product/${id}`} className="flex items-center m-1 hover:bg-yellow-500 bg-yellow-600 text-white border p-2 rounded bg-opacity-70">
-                تفاصيل المنتج
-              </Link>
-              <button className="flex items-center m-1 hover:bg-slate-200 bg-slate-100 text-slate-600 border p-2 rounded bg-opacity-80"
+          <div className="flex flex-wrap">
+            <Link to={`/product/${id}`} className="flex items-center m-1 hover:bg-yellow-500 bg-yellow-600 text-white border p-2 rounded bg-opacity-70">
+              تفاصيل المنتج
+            </Link>
+            <button className="flex items-center m-1 hover:bg-slate-200 bg-slate-100 text-slate-600 border p-2 rounded bg-opacity-80"
               onClick={() => addToCart(id)}>
-                <FontAwesomeIcon className='ml-3' icon={faCirclePlus} /> اضف الي السلة
-              </button>
-            </div>
+              <FontAwesomeIcon className='ml-3' icon={faCirclePlus} /> اضف الي السلة
+            </button>
+          </div>
         </div>
       </div>
     </>

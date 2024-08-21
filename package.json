@@ -1,1 +1,5 @@
-{}
+{
+  "dependencies": {
+    "@fancyapps/ui": "^5.0.36"
+  }
+}
