@@ -22,6 +22,8 @@ const GoogleCallback = () => {
                 localStorage.setItem('access_token', response.data.token);
                 // set the auth is true
                 localStorage.setItem('isAuth', true);
+                // set isAdmin true or false
+                localStorage.setItem("isAdmin", response.data.isAdmin)
                 // empty card for reload products
                 dispatch(emptyCard());
 

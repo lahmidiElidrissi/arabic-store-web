@@ -23,3 +23,4 @@ Route::middleware('auth:sanctum')->delete('/v1/card/remove/product/{id}', [\App\
 Route::middleware('auth:sanctum')->post('/v1/card/update/product/quantity/{id}/{quantity}', [\App\Http\Controllers\CardController::class, 'updateProductQuantity']);
 Route::middleware('auth:sanctum')->resource('/v1/orders', \App\Http\Controllers\OrderController::class);
 Route::get('/v1/create/guest/user', [\App\Http\Controllers\Auth\AuthenticatedSessionController::class, 'createGustUser']);
+Route::middleware('auth:sanctum' , 'abilities:admin')->get('/v1/dashboard/products', [\App\Http\Controllers\ProductController::class , 'getData']);

@@ -30,7 +30,7 @@ export default function RootLayout() {
     }
 
     // add login request
-    if (localStorage.getItem("access_token") == null && status === "idle") {
+    if ( localStorage.getItem("access_token") == null ) {
       getTokenWithGuestUser();
     }
     
@@ -40,6 +40,7 @@ export default function RootLayout() {
     const response = await axiosHttpClient.get(`${import.meta.env.VITE_URL_BACKEND}/create/guest/user`);
     response.data.token && localStorage.setItem("access_token", response.data.token);
     localStorage.setItem("isAuth", false)
+    localStorage.setItem("isAdmin" , false);
     await axiosHttpClient.get(
       `${import.meta.env.VITE_URL_BACKEND_2}/sanctum/csrf-cookie`
     );

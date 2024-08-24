@@ -32,7 +32,11 @@ export default function login() {
             }).showToast();
             // redirect to home
             response.data.token && localStorage.setItem("access_token", response.data.token);
+            // set isAuth
             localStorage.setItem("isAuth", true)
+            // set isAdmin true or false
+            localStorage.setItem("isAdmin", response.data.isAdmin)
+            // empty card for gets products of current user
             dispatch(emptyCard());
             navigate('/');
         }else{

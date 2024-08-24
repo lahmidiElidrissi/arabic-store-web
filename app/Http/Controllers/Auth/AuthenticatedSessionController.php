@@ -20,9 +20,11 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $token = $request->user()->createToken('gusetToken')->plainTextToken;
+        $role = $request->user()->getRoleNames();
 
-        return response()->json(['token' => $token]);
+        $token = $request->user()->createToken('AuthToken' , [$role[0]] )->plainTextToken;
+
+        return response()->json(['token' => $token , 'user' => $request->user() , 'isAdmin' =>  $request->user()->isAdmin() ]);
     }
 
     /**
@@ -58,6 +60,7 @@ class AuthenticatedSessionController extends Controller
         $guestUser->update([
             'email' => "guest{$guestUser->id}@guest.com",
         ]);
+        $guestUser->assignRole('user');
         $token = $guestUser->createToken('gusetToken')->plainTextToken;
         return response()->json(['token' => $token]);
     }

@@ -12,15 +12,10 @@ export default function Navbar() {
     const card = useSelector((state) => state.card.products)
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    let classes = "";
 
     const handleStickyNavbar = () => {
         if (window.scrollY >= 80) {
             setSticky(true);
-            classes = "!fixed !z-[9999] !bg-white !bg-opacity-60 shadow-sticky backdrop-blur-sm !transition border";
-            if (window.innerWidth >= 768) {
-                classes = "!fixed !z-[9999] !bg-white shadow-sticky  !transition border";
-            }
         } else {
             setSticky(false);
         }
@@ -33,6 +28,7 @@ export default function Navbar() {
     const logout = () => {
         localStorage.removeItem("access_token");
         localStorage.setItem("isAuth" , false);
+        localStorage.setItem("isAdmin" , false);
         dispatch(emptyCard());
         navigate('/');
     }
@@ -41,7 +37,7 @@ export default function Navbar() {
     return (
 
         <nav className={`w-full md:static md:text-sm !bg-white !bg-opacity-10 shadow-sticky backdrop-blur-sm ${sticky
-            ? classes
+            ? "!fixed !z-[9999] !bg-white !bg-opacity-60 shadow-sticky backdrop-blur-sm !transition border"
             : ""
             }`}>
             <div className="items-center px-4 max-w-screen-xl mx-auto md:flex md:px-8">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProductController extends Controller
 {
@@ -103,5 +104,28 @@ class ProductController extends Controller
         return Response::json([
             'product' => $products
         ], 200);
+    }
+
+    public function getData(Request $request) {
+        
+        $query = Product::query();
+
+        return DataTables::of($query)
+            ->filter(function ($query) use ($request) {
+                if ( !empty($request['search']) ) {
+                    $searchValue = $request['search'];
+                    $query->where('name', 'like', "%{$searchValue}%")
+                          ->orWhere('price', 'like', "%{$searchValue}%");
+                }
+            })
+            ->order(function ($query) use ($request) {
+                if ( !empty($request['order'] )) {
+                    $orderColumn = $request['order'][0]['column'];
+                    $orderDir = $request['order'][0]['dir'];
+                    $query->orderBy($request->columns[$orderColumn]['data'], $orderDir);
+                }
+            })
+            ->make(true);
+
     }
 }

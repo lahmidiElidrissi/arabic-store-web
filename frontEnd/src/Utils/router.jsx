@@ -8,6 +8,9 @@ import Login from "../componants/Login";
 import GoogleCallback from "../componants/GoogleCallback";
 import OrderPage from "../componants/OrderPage";
 import OrderComplated from "../componants/orderComplated";
+import IsGuest from "../componants/IsGuest";
+import Dashboard from "../componants/Dashboard/Dashboard";
+import Products from "../componants/Dashboard/Products";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +35,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <IsGuest OriginalComponent={Login}  />,
       },
       {
         path: "/googleCallBack",
@@ -48,5 +51,15 @@ export const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: "/dashboard",
+    element: <Dashboard />,
+    children:[
+      {
+        path: "/dashboard/products",
+        element: <Products />,
+      }
+    ],
+  }
 ]);
 
