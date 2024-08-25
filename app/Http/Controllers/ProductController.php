@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Env;
 use Illuminate\Support\Facades\Response;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -14,10 +16,10 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        if ( !empty($request->all()) ) {
+        if (!empty($request->all())) {
             $products = Self::SearchProducts($request);
-        } 
-        if ( empty($request->all()) || empty($products) ) {
+        }
+        if (empty($request->all()) || empty($products)) {
             $products = Product::with(["images", "category"])->paginate(6);
         }
 
@@ -49,7 +51,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        //
+        return Response::json($product->load(["images", "category"]), 200);
     }
 
     /**
@@ -71,10 +73,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
-    {
-        //
-    }
+    public function destroy(Product $product) {}
 
     /**
      * Search for products based on name or category.
@@ -82,7 +81,8 @@ class ProductController extends Controller
      * @param Request $request The request object containing the search parameters.
      * @return \Illuminate\Database\Eloquent\Collection|null The collection of found products or null if no products found.
      */
-    public static function SearchProducts($request) {
+    public static function SearchProducts($request)
+    {
         // get procucts with images and category
         $products = Product::with(["images", "category"]);
 
@@ -99,33 +99,90 @@ class ProductController extends Controller
         return $products->paginate(6);
     }
 
-    public function getProductById($id) {
-        $products = Product::with(["images", "category"])->where("id",$id)->get();
+    public function getProductById($id)
+    {
+        $products = Product::with(["images", "category"])->where("id", $id)->get();
         return Response::json([
             'product' => $products
         ], 200);
     }
 
-    public function getData(Request $request) {
-        
-        $query = Product::query();
+    public function getData(Request $request)
+    {
+
+        $query = Product::query()->with("images");
 
         return DataTables::of($query)
             ->filter(function ($query) use ($request) {
-                if ( !empty($request['search']) ) {
+                if (!empty($request['search'])) {
                     $searchValue = $request['search'];
                     $query->where('name', 'like', "%{$searchValue}%")
-                          ->orWhere('price', 'like', "%{$searchValue}%");
+                        ->orWhere('price', 'like', "%{$searchValue}%");
                 }
             })
             ->order(function ($query) use ($request) {
-                if ( !empty($request['order'] )) {
+                if (!empty($request['order'])) {
                     $orderColumn = $request['order'][0]['column'];
                     $orderDir = $request['order'][0]['dir'];
                     $query->orderBy($request->columns[$orderColumn]['data'], $orderDir);
                 }
             })
             ->make(true);
+    }
 
+    public function removeProduct($id)
+    {
+        $user = auth()->user();
+        $product = Product::find($id);
+        if ($user->isAdmin()) {
+            $product->delete();
+            return Response::json(['success' => true], 200);
+        } else {
+            return Response::json(['success' => false], 403);
+        }
+    }
+
+    public function updateImages(Request $request, $productId)
+    {
+        // Check if files are present in the request
+        if (!isset($request["images"]) || !is_array($request["images"])) {
+            return response()->json(['error' => 'No images uploaded'], 400);
+        }
+
+        $files = $request["images"]; // Directly access the images array
+
+        // Find the product
+        $product = Product::findOrFail($productId);
+
+        // Process each uploaded image
+        foreach ($files as $images) {
+            foreach ($images as $image) {
+                $imageName = time() . '_' . uniqid() . '.' . $image->extension();
+                $image->move(public_path('images'), $imageName);
+                $fullPath = Env::get('APP_URL').'/images/' . $imageName;
+
+                // Save the image path in the database
+                $product->images()->create([
+                    'path' => $fullPath,
+                ]);
+            }
+        }
+
+        // Return the updated list of images
+        return response()->json(['images' => $product->images]);
+    }
+
+    public function removeImage($produitId , $imageId)
+    {
+        $image = Image::find($imageId);
+        $image->delete();
+        //unlink image
+        $path = $image->path;
+        // remove domain from path
+        $path = str_replace(Env::get('APP_URL') . '/', '', $path);
+        unlink($path);
+        $product = Product::find($produitId);
+        $image = $product->images()->get();
+        return Response::json(['images' => $image], 200);
     }
 }

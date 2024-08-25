@@ -11,10 +11,10 @@ function Dashboard() {
 
     return (
         <div className="flex h-screen bg-gray-200">
-            <div className="flex-1 flex flex-col " style={{ overflow: 'scroll' }}>
+            <div className="flex-1 flex flex-col " style={{ overflow: 'auto' }}>
                 <header className="p-4 bg-white shadow-md flex justify-between items-center md:hidden">
                     <img className='max-w-[70px] md:max-w-[85px] lg:max-w-[95px]'
-                        src="../../images/logo-white.png"
+                        src={`${import.meta.env.VITE_URL_FRONT_END}/images/logo-white.png`}
                         width={120}
                         height={50}
                         alt="logo"

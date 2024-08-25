@@ -15,6 +15,7 @@ class Image extends Model
     ];
 
     protected $visible = [
+        'id',
         'path',
     ];
 }

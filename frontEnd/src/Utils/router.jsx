@@ -9,8 +9,10 @@ import GoogleCallback from "../componants/GoogleCallback";
 import OrderPage from "../componants/OrderPage";
 import OrderComplated from "../componants/orderComplated";
 import IsGuest from "../componants/IsGuest";
+import IsAdmin from "../componants/IsAdmin";
 import Dashboard from "../componants/Dashboard/Dashboard";
 import Products from "../componants/Dashboard/Products";
+import ProductPageDashboard from "../componants/Dashboard/ProductPageDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -53,11 +55,15 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard />,
+    element: <IsAdmin OriginalComponent={Dashboard} />,
     children:[
       {
         path: "/dashboard/products",
         element: <Products />,
+      },
+      {
+        path: "/dashboard/products/edit/:id",
+        element: <ProductPageDashboard />,
       }
     ],
   }

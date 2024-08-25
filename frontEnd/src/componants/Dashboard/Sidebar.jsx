@@ -9,7 +9,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="flex items-center justify-between px-4 py-4">
                 <div className='mx-auto'>
                     <img className='max-w-[70px] md:max-w-[85px] lg:max-w-[95px]'
-                        src="../../images/logo-white.png"
+                        src={`${import.meta.env.VITE_URL_FRONT_END}/images/logo-white.png`}
                         width={120}
                         height={50}
                         alt="logo"
