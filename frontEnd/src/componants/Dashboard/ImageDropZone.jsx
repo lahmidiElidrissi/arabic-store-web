@@ -3,6 +3,7 @@ import Dropzone from 'dropzone';
 import axiosHttpClient from '../../Utils/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove, faUpload } from '@fortawesome/free-solid-svg-icons';
+import Toastify from 'toastify-js'
 
 const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
     const [currentImages, setCurrentImages] = useState([]);
@@ -46,6 +47,16 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
             .delete(`${import.meta.env.VITE_URL_BACKEND}/products/${productId}/remove-image/${imageId}`)
             .then((response) => {
                 setCurrentImages(response.data.images);
+                Toastify({
+                    text: "تم الحذف بنجاح",
+                    className: "text-1xl",
+                    position: "center",
+                    style: {
+                        background: "linear-gradient(90deg, rgba(22,200,22,1) 0%, rgba(38,170,3,1) 43%, rgba(36,213,0,1) 100%)",
+                        marginTop: "10vh",
+                        width: "70%",
+                    },
+                }).showToast();
             })
             .catch((error) => {
                 console.error(error);
@@ -54,7 +65,7 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
 
     return (
         <div className='w-[90%] md:w-1/2'>
-            <h2 className="text-xl m-5"> صور المنتجات  :</h2>
+            <h2 className="text-xl m-5"> صور المنتج   :</h2>
 
             <div id="dropzone" className="dropzone" style={{
                 border: '2px dashed #cccccc',

@@ -13,6 +13,7 @@ import IsAdmin from "../componants/IsAdmin";
 import Dashboard from "../componants/Dashboard/Dashboard";
 import Products from "../componants/Dashboard/Products";
 import ProductPageDashboard from "../componants/Dashboard/ProductPageDashboard";
+import AddProduct from "../componants/Dashboard/addProduct";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +65,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/products/edit/:id",
         element: <ProductPageDashboard />,
+      },
+      {
+        path: "/dashboard/products/add",
+        element: <AddProduct />,
       }
     ],
   }

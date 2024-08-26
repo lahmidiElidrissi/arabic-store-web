@@ -31,7 +31,7 @@ const GoogleCallback = () => {
                     text: "تم تسجيل الدخول بنجاح بواسطة جوجل",
                     position: "center",
                     style : {
-                        background: "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))",
+                        background: "linear-gradient(90deg, rgba(22,200,22,1) 0%, rgba(38,170,3,1) 43%, rgba(36,213,0,1) 100%)",
                         marginTop: "10vh",
                         width: "70%",
                     },

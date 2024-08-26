@@ -38,13 +38,4 @@
     width: 100%;
     height: auto;
   }
-
-  #dropzone .dz-details {
-    display: none;
-  }
-
-  .dz-preview {
-    display: none;
-  }
-
 }

@@ -21,7 +21,7 @@ export default function isAdmin({ OriginalComponent }) {
                 },
             }).showToast();
         }
-    }, []);
+    }, [isAdmin]);
 
     if (isAdmin === null || isAdmin === "true") {
         return <OriginalComponent />;

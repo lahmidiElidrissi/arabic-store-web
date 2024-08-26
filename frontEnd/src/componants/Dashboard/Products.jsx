@@ -59,7 +59,7 @@ const MainContent = () => {
             className: "text-1xl",
             position: "center",
             style: {
-              background: "linear-gradient(to right, rgb(182, 244, 146), rgb(51, 139, 147))",
+              background: "linear-gradient(90deg, rgba(22,200,22,1) 0%, rgba(38,170,3,1) 43%, rgba(36,213,0,1) 100%)",
               marginTop: "10vh",
               width: "70%",
             },
@@ -101,7 +101,7 @@ const MainContent = () => {
           </button>
           <button
             onClick={() => onDelete(row.id)}
-            className="bg-slate-600 m-1 px-4 py-1 rounded text-white hover:bg-slate-700 text-sm"
+            className="bg-red-500 m-1 px-4 py-1 rounded text-white hover:bg-red-700 text-sm"
           >
             حذف
           </button>
