@@ -97,17 +97,6 @@ export default function SingleProduct() {
 
     return (
         <div className="flex-1 py-5 md:pb-5 md:pt-0 md:pr-64 bg-slate-100">
-            <style>
-                {`
-                   #dropzone .dz-details {
-                        display: none;
-                    }
-
-                    .dz-preview {
-                        display: none;
-                    }  
-                `}
-            </style>
             <div className='mx-5'>
                 <h2 class="text-3xl font-bold !leading-tight text-black sm:text-4xl md:text-[45px] pb-5 md:p-5 text-center md:bg-white w-full"> تحديث المنتج </h2>
                 <hr />
@@ -128,7 +117,7 @@ export default function SingleProduct() {
                     <label className='text-xl'> الوصف :</label>
                     <textarea className='bg-white w-[90%] md:w-1/2 border border-slate-300 rounded-md py-2 pl-9 pr-3' defaultValue={product?.description}
                         onChange={(e) => setProduct({ ...product, description: e.target.value })} rows="4" />
-                    <ImageDropZone productId={id} onImageUpdate={handleImageUpdate} ProductImages={product?.images} />
+                    <ImageDropZone productId={id} onImageUpdate={handleImageUpdate} ProductImages={product?.images} isAddedProduct={false} />
                     <div className='flex flex-wrap'>
                         <button className='text-xl mx-2 bg-yellow-500 p-2 rounded text-white' onClick={HandleSubmit}> تحديث </button>
                         <button className='text-xl mx-2 bg-red-500 p-2 rounded text-white' onClick={ () => onDelete(product?.id) } > حذف </button>

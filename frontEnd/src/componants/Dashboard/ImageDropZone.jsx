@@ -5,11 +5,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRemove, faUpload } from '@fortawesome/free-solid-svg-icons';
 import Toastify from 'toastify-js'
 
-const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
+const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct }) => {
     const [currentImages, setCurrentImages] = useState([]);
+    
+    if (currentImages && currentImages.length > 0) 
+        onImageUpdate(currentImages);
 
     useEffect(() => {
         // Fetch product details to get the current images
+        if (ProductImages)
         setCurrentImages(ProductImages);
 
         // Initialize Dropzone
@@ -27,9 +31,14 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
             autoProcessQueue: true,
             addRemoveLinks: false,
             success: function (file, response) {
-                console.log(response.images);
-                setCurrentImages(response.images);
-                if (onImageUpdate) onImageUpdate();
+                
+                if (!isAddedProduct)
+                    setCurrentImages( response.images );
+                if (isAddedProduct)
+                setCurrentImages( (currentImages) => ( [...currentImages, ...response.images]) );         
+
+                if (onImageUpdate) 
+                onImageUpdate(currentImages);
             },
             error: function (file, response) {
                 console.error('Image upload failed:', response);
@@ -65,6 +74,17 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages }) => {
 
     return (
         <div className='w-[90%] md:w-1/2'>
+            <style>
+                {`
+                   #dropzone .dz-details {
+                        display: none;
+                    }
+
+                    .dz-preview {
+                        display: none;
+                    }  
+                `}
+            </style>
             <h2 className="text-xl m-5"> صور المنتج   :</h2>
 
             <div id="dropzone" className="dropzone" style={{

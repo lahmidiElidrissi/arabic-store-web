@@ -42,7 +42,7 @@ const MainContent = () => {
   };
 
   const columns = [
-    { name: 'الصورة', selector: (row) => <img src={row?.images[0].path} alt={row?.name} className="w-[50%] h-[50%]"></img> },
+    { name: 'الصورة', selector: (row) => <img src={row?.images[0]?.path} alt={row?.name} className="w-[150px] h-[150px]" style={{ objectFit : 'cover'}}></img> },
     { name: 'اسم', selector: (row) => row?.name, sortable: true },
     { name: 'وصف', selector: (row) => row?.description ? row.description.slice(0, 50) + "..." : "", sortable: true },
     { name: 'السعر', selector: (row) => row?.price, sortable: true },

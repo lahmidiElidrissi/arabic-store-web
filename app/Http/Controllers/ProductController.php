@@ -20,7 +20,7 @@ class ProductController extends Controller
             $products = Self::SearchProducts($request);
         }
         if (empty($request->all()) || empty($products)) {
-            $products = Product::with(["images", "category"])->paginate(6);
+            $products = Product::with(["images", "category"])->orderby("created_at", "desc")->paginate(6);
         }
 
         return Response::json([
@@ -43,7 +43,21 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create($request->all());
+
+        $images = $request->images;
+        foreach ($images as $image) {
+            $image = Image::find($image["id"]);
+            if ($image) {
+                $product->images()->save($image);
+            }
+        }
+
+        return Response::json([
+            'success' => true,
+            'status' => 200,
+            'product' => $product
+        ]);
     }
 
     /**
@@ -100,7 +114,7 @@ class ProductController extends Controller
             $products->where('category_id', $request->category);
         }
 
-        return $products->paginate(6);
+        return $products->orderby("created_at", "desc")->paginate(6);
     }
 
     public function getProductById($id)
@@ -114,7 +128,7 @@ class ProductController extends Controller
     public function getData(Request $request)
     {
 
-        $query = Product::query()->with("images");
+        $query = Product::query()->with("images")->orderby("created_at", "desc");
 
         return DataTables::of($query)
             ->filter(function ($query) use ($request) {
@@ -155,9 +169,12 @@ class ProductController extends Controller
 
         $files = $request["images"]; // Directly access the images array
 
-        // Find the product
-        $product = Product::findOrFail($productId);
+        $product = null;
 
+        // Find the product
+        if ($productId != "null")
+           $product = Product::findOrFail($productId);
+       
         // Process each uploaded image
         foreach ($files as $images) {
             foreach ($images as $image) {
@@ -166,14 +183,23 @@ class ProductController extends Controller
                 $fullPath = Env::get('APP_URL').'/images/' . $imageName;
 
                 // Save the image path in the database
-                $product->images()->create([
-                    'path' => $fullPath,
-                ]);
+                if($product){
+                    $product->images()->create([
+                        'path' => $fullPath,
+                    ]);
+                }else{
+                    $image = Image::create([
+                        'path' => $fullPath,
+                    ]);
+                }
             }
         }
 
         // Return the updated list of images
+        if($product)
         return response()->json(['images' => $product->images]);
+
+        return response()->json(['images' => [$image]]);
     }
 
     public function removeImage($produitId , $imageId)
