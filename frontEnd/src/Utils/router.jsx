@@ -13,7 +13,11 @@ import IsAdmin from "../componants/IsAdmin";
 import Dashboard from "../componants/Dashboard/Dashboard";
 import Products from "../componants/Dashboard/Products";
 import ProductPageDashboard from "../componants/Dashboard/ProductPageDashboard";
-import AddProduct from "../componants/Dashboard/addProduct";
+import AddProduct from "../componants/Dashboard/AddProduct";
+import AddCategory from "../componants/Dashboard/AddCategory";
+import Categories from "../componants/Dashboard/Categories";
+import CategoryPageDashboard from "../componants/Dashboard/CategoryPageDashboard";
+
 
 export const router = createBrowserRouter([
   {
@@ -69,6 +73,18 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/products/add",
         element: <AddProduct />,
+      },
+      {
+        path: "/dashboard/categories/add",
+        element: <AddCategory />,
+      },
+      {
+        path: "/dashboard/categories",
+        element: <Categories />,
+      },
+      {
+        path: "/dashboard/categories/edit/:id",
+        element: <CategoryPageDashboard />,
       }
     ],
   }

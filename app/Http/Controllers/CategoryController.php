@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class CategoryController extends Controller
 {
@@ -32,7 +33,10 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Response::json([
+            "category" => Category::create($request->all()),
+            "success" => true,
+        ]);
     }
 
     /**
@@ -40,7 +44,7 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        return Response::json($category , 200);
     }
 
     /**
@@ -56,7 +60,11 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        return Response::json([
+            'success' => true,
+            'status' => 200,
+        ]);
     }
 
     /**
@@ -64,6 +72,31 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return Response::json([
+            "success" => true
+        ]);
+    }
+
+    public function getData(Request $request)
+    {
+
+        $query = Category::query()->orderby("created_at", "desc");
+
+        return DataTables::of($query)
+            ->filter(function ($query) use ($request) {
+                if (!empty($request['search'])) {
+                    $searchValue = $request['search'];
+                    $query->where('name', 'like', "%{$searchValue}%");
+                }
+            })
+            ->order(function ($query) use ($request) {
+                if (!empty($request['order'])) {
+                    $orderColumn = $request['order'][0]['column'];
+                    $orderDir = $request['order'][0]['dir'];
+                    $query->orderBy($request->columns[$orderColumn]['data'], $orderDir);
+                }
+            })
+            ->make(true);
     }
 }

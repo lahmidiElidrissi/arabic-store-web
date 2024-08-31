@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBagShopping, faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { faBagShopping, faCartArrowDown, faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { emptyCard } from '../Utils/cardSlice';
 
@@ -94,6 +94,19 @@ export default function Navbar() {
                                 )}
 
                             </li>
+                            {
+                                (localStorage.getItem("isAdmin") === 'true') ? (
+                                    <>
+                                    <li>
+                                        <Link to="/dashboard/products">
+                                            <button className="w-[50%] md:w-auto mx-auto block py-4 px-4 font-medium text-center text-white bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 active:shadow-none rounded-lg shadow">
+                                                لوحة التحكم <FontAwesomeIcon className='mr-2' icon={faClipboard} />
+                                            </button>
+                                        </Link>
+                                    </li>
+                                    </>
+                                ) : (null)
+                            }
                             <li className='relative'>
                                 <Link to="/card" className="w-[50%] mx-auto block py-3 px-4 font-medium text-center text-white bg-yellow-600 hover:bg-yellow-500 active:bg-yellow-700 active:shadow-none rounded-lg shadow md:inline">
                                     السلة <FontAwesomeIcon className='mr-2' icon={faBagShopping} />

@@ -1,4 +1,4 @@
-import { faCirclePlus, faList, faShop } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCirclePlus, faList, faShop } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { Link } from 'react-router-dom';
@@ -35,8 +35,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <nav className="mt-5 space-y-2">
                 <Link to="/dashboard/products/add" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white"> <FontAwesomeIcon className='ml-3' icon={faCirclePlus} /> اضافة منتج  </Link>
                 <Link to="/dashboard/products" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white"> <FontAwesomeIcon className='ml-3' icon={faShop} /> المنتجات</Link>
-                <Link to="" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white">  <FontAwesomeIcon className='ml-3' icon={faCirclePlus} /> اضافة فئة </Link>
-                <Link to="" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white">  <FontAwesomeIcon className='ml-3' icon={faList} /> فئات </Link>
+                <Link to="/dashboard/categories/add" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white">  <FontAwesomeIcon className='ml-3' icon={faCirclePlus} /> اضافة فئة </Link>
+                <Link to="/dashboard/categories" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white">  <FontAwesomeIcon className='ml-3' icon={faList} /> فئات </Link>
+                <Link to="/" className="block py-2.5 px-4 rounded transition duration-200 border border-yellow-500 rounded w-[80%] mx-auto text-slate-800 font-medium text-center hover:bg-yellow-600 hover:text-white">  <FontAwesomeIcon className='ml-3' icon={faArrowLeft} /> العودة إلى المتجر </Link>
             </nav>
         </div>
     );
