@@ -36,7 +36,7 @@ function Dashboard() {
                         </svg>
                     </button>
                 </header>
-                <Outlet />
+                <Outlet context={{ setIsOpen }} />
             </div>
             <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
         </div>

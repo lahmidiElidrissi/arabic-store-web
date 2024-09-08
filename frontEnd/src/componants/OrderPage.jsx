@@ -4,6 +4,7 @@ import Toastify from 'toastify-js'
 import axiosHttpClient from '../Utils/api';
 import { useDispatch } from 'react-redux';
 import { emptyCard } from '../Utils/cardSlice';
+import { currencyFormatter } from '../Utils/helpers';
 
 
 export default function OrderPage() {
@@ -85,7 +86,7 @@ export default function OrderPage() {
             url += `%0D%0A
             %0D%0A`;
         });
-        url += `%0D%0Aالمجموع : ${total}دم`;
+        url += `%0D%0Aالمجموع : ${total} ${currencyFormatter.currency}`;
 
         return url
     }  
@@ -101,7 +102,7 @@ export default function OrderPage() {
                         </h1>
                         <hr />
                         <h1 className='my-3 md:my-5 text-[20px] md:text-2xl text-green-800'>
-                            المجموع : {products && (products.length > 0) ? total : 0} دم
+                            المجموع : {products && (products.length > 0) ? total : 0} { currencyFormatter.currency }
                         </h1>
                     </div>
 

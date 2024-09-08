@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axiosHttpClient from '../../Utils/api';
 import ImageDropZone from './ImageDropZone';
 import Toastify from 'toastify-js'
@@ -11,6 +11,7 @@ export default function SingleProduct() {
     const [categories, setCategories] = useState([]);
     const selectOptionCategory = useRef([]);
     const navigate = useNavigate();
+    const { setIsOpen } = useOutletContext();
 
     const handleImageUpdate = () => {
         console.log('Image updated successfully');
@@ -27,6 +28,17 @@ export default function SingleProduct() {
         axiosHttpClient.get(urlCategories).then(response => {
             setCategories(response.data.categories);
         })
+
+        setIsOpen(false);
+        const elementMenu = document.querySelectorAll('.menu a');
+        if (elementMenu.length > 0) {
+            elementMenu.forEach(element => {                
+                element.addEventListener('click', () => {
+                setIsOpen(false);
+                });
+            });
+        }
+
     }, []);
 
     // select the current category

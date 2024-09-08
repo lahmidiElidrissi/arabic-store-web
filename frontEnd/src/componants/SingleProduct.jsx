@@ -4,6 +4,7 @@ import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import { addProductToAPI } from '../Utils/cardSlice';
 import { useDispatch } from 'react-redux';
+import { currencyFormatter } from '../Utils/helpers';
 
 
 const SingleProduct = ({ product }) => {
@@ -39,7 +40,7 @@ const SingleProduct = ({ product }) => {
           </p>
           <p className="text-center mb-6 border-opacity-10 pb-6 font-medium text-body-color">
             <span className="border text-slate-600 p-1 me-2 rounded bg-opacity-80"> السعر بالجملة : </span>
-            <span className="p-1 font-bold text-slate-800 me-2 rounded bg-opacity-80">  {price} دم </span>
+            <span className="p-1 font-bold text-slate-800 me-2 rounded bg-opacity-80">  {price} {currencyFormatter.currency} </span>
           </p>
 
           <div className="flex flex-wrap m-auto justify-center">

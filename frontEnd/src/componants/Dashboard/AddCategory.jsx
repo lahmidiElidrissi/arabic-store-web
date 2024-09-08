@@ -26,7 +26,7 @@ export default function AddProduct() {
                             width: "70%",
                         },
                     }).showToast();
-                    navigate('/dashboard/products')
+                    navigate('/dashboard/categories')
                 }
             })
         }

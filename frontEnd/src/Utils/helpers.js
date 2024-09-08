@@ -51,4 +51,12 @@ const paginationOptionsWithArabicLang = {
     selectAllRowsItemText: 'اختر الكل',       // Translation for "Select All"
 };
 
-export { customStylesDatatable, paginationOptionsWithArabicLang };
+const currencyFormatter = {
+    currency: 'دم',
+};
+
+const isMobile = () => {
+    window.innerWidth < 768
+};
+
+export { customStylesDatatable, paginationOptionsWithArabicLang, currencyFormatter };

@@ -9,6 +9,7 @@ import { addProductToAPI } from '../Utils/cardSlice';
 import Loader from './loader';
 import Carousel from '../Utils/Carousel';
 import Fancybox from '../Utils/FancyBox';
+import { currencyFormatter } from '../Utils/helpers';
 
 export default function ProductPage() {
 
@@ -87,7 +88,7 @@ export default function ProductPage() {
                             </p>
                             <p className="mb-6 border-opacity-10 pb-6 text-yellow-600 font-medium text-body-color text-center md:text-start">
                                 <span className="text-slate-600 border p-1 me-2 rounded bg-opacity-80"> السعر بالجملة : </span>
-                                <span className="border p-1 me-2 rounded bg-opacity-80">  {product.price} دم </span>
+                                <span className="border p-1 me-2 rounded bg-opacity-80">  {product.price} {currencyFormatter.currency} </span>
                             </p>
                             <div className="w-auto w-full" >
                                 <div className="flex flex-wrap justify-center md:justify-start">

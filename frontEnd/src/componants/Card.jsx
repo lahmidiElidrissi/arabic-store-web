@@ -4,6 +4,7 @@ import { removeProductFromAPI, updateQuantityProduct } from '../Utils/cardSlice'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Link, useNavigate } from 'react-router-dom';
+import { currencyFormatter } from '../Utils/helpers';
 
 export default function Card() {
 
@@ -52,7 +53,7 @@ export default function Card() {
             </h1>
             <hr />
             <h1 className='my-3 md:my-5 text-[20px] md:text-2xl'>
-              اجمالي الاسعار : {products && (products.length > 0) ? totalPrices(products) : 0} دم
+              اجمالي الاسعار : {products && (products.length > 0) ? totalPrices(products) : 0} { currencyFormatter.currency }
             </h1>
           </div>
           <div className='w-full m-5 flex justify-center items-center'>
@@ -83,7 +84,7 @@ export default function Card() {
                       </div>
                     </div>
                   </div>
-                  <div className='m-3 md:m-5 font-bold'>{product.price} دم</div>
+                  <div className='m-3 md:m-5 font-bold'>{product.price} {currencyFormatter.currency}</div>
                   <div className='flex flex-wrap'>
                     <label className='p-1'> الكمية :  </label>
                     <input

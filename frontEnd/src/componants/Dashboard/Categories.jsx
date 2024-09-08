@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DataTable from 'react-data-table-component';
 import axiosHttpClient from '../../Utils/api';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useOutletContext } from 'react-router-dom';
 import Toastify from 'toastify-js'
 import { customStylesDatatable, paginationOptionsWithArabicLang } from '../../Utils/helpers';
 import Loader from '../loader';
+import NoDataFound from './NoDataFound';
 
 const Categories = () => {
 
@@ -13,6 +14,7 @@ const Categories = () => {
     const [orderColumn, setOrderColumn] = useState('');
     const [orderDir, setOrderDir] = useState('asc');
     const navigate = useNavigate();
+    const [pending, setPending] = useState(true);
 
     // fetch all products
     const fetchData = () => {
@@ -21,19 +23,34 @@ const Categories = () => {
             orderColumn: orderColumn,
             orderDir: orderDir
         });
-
+        setPending(true);
         axiosHttpClient.get(`${import.meta.env.VITE_URL_BACKEND}/dashboard/categories?${params.toString()}`)
             .then(response => {
                 setData(response.data.data || []);
+                setPending(false);
             })
             .catch(error => {
                 console.error(error);
+                setPending(false);
             });
     };
 
     useEffect(() => {
         fetchData();
     }, [search, orderColumn, orderDir]);
+
+    const { setIsOpen } = useOutletContext();
+    useEffect(() => {
+        setIsOpen(false);
+        const elementMenu = document.querySelectorAll('.menu a');
+        if (elementMenu.length > 0) {
+            elementMenu.forEach(element => {
+                element.addEventListener('click', () => {
+                setIsOpen(false);
+                });
+            });
+        }
+    }, []);
 
 
     // handle sort datatable
@@ -85,7 +102,7 @@ const Categories = () => {
         navigate(`/dashboard/categories/edit/${id}`);
     };
 
-    const enhancedColumns = [
+    const additionsColumns = [
         ...columns,
         {
             name: '',
@@ -114,29 +131,27 @@ const Categories = () => {
 
     return (
         <div className="flex-1 py-5 md:p-6 md:pr-64 bg-slate-100">
-            {
-                data.length > 0 ?
-                    <div className='mx-5'>
-                        <h2 class="text-3xl font-bold !leading-tight text-black sm:text-4xl md:text-[45px] md:p-5 text-center">  الفئات </h2>
-                        <input
-                            className='placeholder:italic placeholder:text-slate-400 block bg-white w-auto border border-slate-300 rounded-md py-1 pr-2 shadow-sm focus:outline-none focus:border-yellow-100 focus:ring-yellow-600 focus:ring-1 sm:text-sm m-5'
-                            type="text"
-                            placeholder=" البحث عن الفئة "
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        <DataTable
-                            columns={enhancedColumns}
-                            data={data}
-                            pagination
-                            onSort={handleSort}
-                            customStyles={customStylesDatatable}
-                            paginationComponentOptions={paginationOptionsWithArabicLang}
-                        />
-                    </div>
-                    :
-                    <Loader />
-            }
+            <div className='mx-5'>
+                <h2 class="text-3xl font-bold !leading-tight text-black sm:text-4xl md:text-[45px] md:p-5 text-center">  الفئات </h2>
+                <input
+                    className='placeholder:italic placeholder:text-slate-400 block bg-white w-auto border border-slate-300 rounded-md py-1 pr-2 shadow-sm focus:outline-none focus:border-yellow-100 focus:ring-yellow-600 focus:ring-1 sm:text-sm m-5'
+                    type="text"
+                    placeholder=" البحث عن الفئة "
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <DataTable
+                    columns={additionsColumns}
+                    data={data}
+                    pagination
+                    onSort={handleSort}
+                    customStyles={customStylesDatatable}
+                    paginationComponentOptions={paginationOptionsWithArabicLang}
+                    noDataComponent={<NoDataFound />} 
+                    progressPending={pending}
+                    progressComponent={<Loader />}
+                />
+            </div>
         </div>
     );
 };

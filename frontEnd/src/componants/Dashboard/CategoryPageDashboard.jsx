@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useOutletContext, useParams } from 'react-router-dom';
 import axiosHttpClient from '../../Utils/api';
 import Toastify from 'toastify-js'
 
@@ -9,12 +9,23 @@ export default function SingleProduct() {
     const [category, setCategory] = useState(null);
     const navigate = useNavigate();
 
+    const { setIsOpen } = useOutletContext();
     useEffect(() => {
 
         axiosHttpClient.get(import.meta.env.VITE_URL_BACKEND + '/categories/' + id).then(response => {
             const { id, name } = response.data;
             setCategory({ id, name });
         });
+
+        setIsOpen(false);
+        const elementMenu = document.querySelectorAll('.menu a');
+        if (elementMenu.length > 0) {
+            elementMenu.forEach(element => {
+                element.addEventListener('click', () => {
+                setIsOpen(false);
+                });
+            });
+        }
 
     }, []);
 
