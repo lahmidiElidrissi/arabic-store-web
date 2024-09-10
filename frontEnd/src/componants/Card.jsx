@@ -1,9 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { removeProductFromAPI, updateQuantityProduct } from '../Utils/cardSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { currencyFormatter } from '../Utils/helpers';
 
 export default function Card() {
@@ -13,6 +13,10 @@ export default function Card() {
   const cardId = useSelector((state) => state.card.cardId);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const {setNavIsOpen} = useOutletContext()
+  useEffect(() => {
+    setNavIsOpen(false)
+  }, [])
 
   console.log(error);
   

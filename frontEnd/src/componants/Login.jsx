@@ -1,5 +1,5 @@
-import React, { useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect, useRef } from 'react'
+import { Link, useNavigate, useOutletContext } from 'react-router-dom'
 import axiosHttpClient from '../Utils/api';
 import Toastify from 'toastify-js'
 import { emptyCard } from '../Utils/cardSlice';
@@ -13,6 +13,11 @@ export default function login() {
     const password = useRef([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
+    const {setNavIsOpen} = useOutletContext()
+
+    useEffect(() => {
+            setNavIsOpen(false)
+    }, [])
 
     const login = async (e) => {
         e.preventDefault();

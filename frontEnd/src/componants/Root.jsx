@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../Utils/cardSlice";
 import axiosHttpClient from "../Utils/api";
@@ -9,6 +9,7 @@ import axiosHttpClient from "../Utils/api";
 export default function RootLayout() {
 
   const dispatch = useDispatch();
+  const [navIsOpen, setNavIsOpen] = useState(false);
   const status = useSelector((state) => state.card.status);
   const error = useSelector((state) => state.card.error);
   const location = useLocation();
@@ -49,8 +50,8 @@ export default function RootLayout() {
 
   return (
     <div>
-      <Navbar />
-      <Outlet />
+      <Navbar state={navIsOpen} setState={setNavIsOpen} />
+      <Outlet context={{ setNavIsOpen }} />
       <Footer />
     </div>
   );

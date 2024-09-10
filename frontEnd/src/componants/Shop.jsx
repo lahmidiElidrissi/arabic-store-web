@@ -3,6 +3,7 @@ import Products from './Products'
 import axios from 'axios';
 import SingleProduct from './SingleProduct';
 import Pagination from './Pagination';
+import { useOutletContext } from 'react-router-dom';
 
 export default function Shop() {
 
@@ -12,6 +13,11 @@ export default function Shop() {
     const [lastPage, setLastPage] = useState(1);
     const inputSearch = useRef(null);
     const categoriesSelect = useRef(null);
+
+    const {setNavIsOpen} = useOutletContext()
+    useEffect(() => {
+        setNavIsOpen(false)
+    }, [])
 
     // get products when current page changed
     useEffect(() => {
