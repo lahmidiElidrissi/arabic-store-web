@@ -84,7 +84,7 @@ php artisan migrate
 Run seeder data
 
 ```bash
-php db:seed
+php artisan db:seed
 ```
 
 
@@ -92,7 +92,13 @@ php db:seed
 
 Navigate to the frontend directory:
 ```bash
-cd ../frontEnd
+cd ./frontEnd
+```
+
+Copy the .env.example file to .env:
+
+```bash
+cp .env.example .env
 ```
 
 Install JavaScript dependencies using npm:
@@ -102,24 +108,25 @@ npm install
 
 ## Running the Application
 
-### Step 1: Start the Backend Server
-
-Navigate to the backend directory and run the Laravel development server:
-
-```bash
-php artisan serve
-```
-
-The backend will be accessible at http://127.0.0.1:8000/.
-
-### Step 2: Start the Frontend Server
+### Step 1: Start the Frontend Server
 
 Navigate to the frontend directory and start the React development server:
 
 ```bash
-cd ../frontEnd
+cd ./frontEnd
 npm run dev
 
 ```
 
 The frontend will be accessible at http://localhost:5173.
+
+### Step 2: Start the Backend Server
+
+Navigate to the backend directory and run the Laravel development server:
+
+```bash
+cd ./
+php artisan serve
+```
+
+The backend will be accessible at http://127.0.0.1:8000/.
