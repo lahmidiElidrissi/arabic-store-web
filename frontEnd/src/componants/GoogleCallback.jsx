@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import axiosHttpClient from "../Utils/api";
 import { useNavigate } from "react-router-dom";
-import Loader from "./loader";
+import Loader from "./Loader";
 import { emptyCard } from "../Utils/cardSlice";
 import { useDispatch } from "react-redux";
 import Toastify from 'toastify-js'

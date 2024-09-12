@@ -4,7 +4,7 @@ import axiosHttpClient from '../../Utils/api';
 import { useNavigate, useOutletContext } from 'react-router-dom';
 import Toastify from 'toastify-js'
 import { customStylesDatatable, paginationOptionsWithArabicLang } from '../../Utils/helpers';
-import Loader from '../loader';
+import Loader from '../Loader';
 import NoDataFound from './NoDataFound';
 
 const Categories = () => {

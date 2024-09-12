@@ -1,7 +1,7 @@
 import React from 'react'
 import { useLocation } from 'react-router-dom';
 
-export default function orderComplated() {
+export default function OrderComplated() {
   const url = useLocation().state?.url;
   window.location.href = url;
   return (

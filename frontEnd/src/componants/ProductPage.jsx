@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { addProductToAPI } from '../Utils/cardSlice';
-import Loader from './loader';
+import Loader from './Loader';
 import Carousel from '../Utils/Carousel';
 import Fancybox from '../Utils/FancyBox';
 import { currencyFormatter } from '../Utils/helpers';

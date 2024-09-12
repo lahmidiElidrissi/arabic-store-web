@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Toastify from 'toastify-js'
 
-export default function isAdmin({ OriginalComponent }) {
+export default function IsAdmin({ OriginalComponent }) {
 
     const isAdmin = localStorage.getItem("isAdmin");
     const navigate = useNavigate();
