@@ -212,7 +212,11 @@ class ProductController extends Controller
         $path = str_replace(Env::get('APP_URL') . '/', '', $path);
         unlink($path);
         $product = Product::find($produitId);
-        $image = $product->images()->get();
-        return Response::json(['images' => $image], 200);
+        if ($product) {
+            $images = $product->images()->get();
+            return Response::json(['images' => $images], 200);
+        }else{
+            return Response::json(['images' => []], 200);
+        }
     }
 }

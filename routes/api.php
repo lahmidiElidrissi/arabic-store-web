@@ -32,3 +32,7 @@ Route::middleware('auth:sanctum' , 'abilities:admin')->delete('/v1/products/{pro
 Route::middleware('auth:sanctum' , 'abilities:admin')->resource('/v1/products', \App\Http\Controllers\ProductController::class)->only(['store' , 'update' , 'destroy']);
 Route::middleware('auth:sanctum' , 'abilities:admin')->resource('/v1/categories', \App\Http\Controllers\CategoryController::class)->only(['store' , 'update' , 'destroy']);
 Route::middleware('auth:sanctum' , 'abilities:admin')->get('/v1/dashboard/categories', [\App\Http\Controllers\CategoryController::class , 'getData']);
+
+Route::get('/sanctum/csrf-cookie', function () {
+    return response()->json(['status' => 'CSRF cookie set']);
+});

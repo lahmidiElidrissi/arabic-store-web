@@ -24,6 +24,14 @@ export default function Navbar({state, setState}) {
         window.addEventListener("scroll", handleStickyNavbar);
     });
 
+    useEffect(() => {
+        if (state) {
+            document.body.style.overflow = "hidden";
+        }else{
+            document.body.style.overflow = "auto";
+        }
+    }, [state]);
+
     const logout = () => {
         localStorage.removeItem("access_token");
         localStorage.setItem("isAuth", false);

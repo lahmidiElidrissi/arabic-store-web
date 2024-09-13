@@ -27,5 +27,6 @@ Route::get('/v1/login/google/callback', function () {
 
         return response()->json([
             'token' => $user->createToken('authToken')->plainTextToken,
+            'isAdmin' =>  $user->isAdmin()
         ]);
 });
