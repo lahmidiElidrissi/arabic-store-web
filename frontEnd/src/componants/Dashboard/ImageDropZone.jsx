@@ -15,7 +15,6 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct
         // Fetch product details to get the current images
         if (ProductImages)
         setCurrentImages(ProductImages);
-
         // Initialize Dropzone
         const dropzone = new Dropzone("#dropzone", {
             url: `${import.meta.env.VITE_URL_BACKEND}/products/${productId}/update-images`,
@@ -31,7 +30,6 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct
             autoProcessQueue: true,
             addRemoveLinks: false,
             success: function (file, response) {
-                
                 if (!isAddedProduct)
                     setCurrentImages( response.images );
                 if (isAddedProduct)
@@ -39,10 +37,25 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct
 
                 if (onImageUpdate) 
                 onImageUpdate(currentImages);
+                
             },
             error: function (file, response) {
                 console.error('Image upload failed:', response);
             },
+        });
+
+        dropzone.on("queuecomplete", file => {
+            Toastify({
+                text: "تم تحميل الصور بنجاح",
+                className: "text-1xl",
+                position: "center",
+                style: {
+                    background: "linear-gradient(90deg, rgba(22,200,22,1) 0%, rgba(38,170,3,1) 43%, rgba(36,213,0,1) 100%)",
+                    marginTop: "10vh",
+                    width: "70%",
+                },
+            }).showToast();
+            setLoader(false);
         });
 
         // Cleanup on unmount
@@ -103,7 +116,8 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct
                 </div>
                 <hr />
                 <div className='flex flex-wrap'>
-                    {currentImages && currentImages.map((image) => (
+                {currentImages && [...new Map(currentImages.map(item => [item.id, item])).values()]
+                    .map((image) => (
                         <div key={image.id} style={{ position: 'relative', display: 'inline-block', margin: '10px' }}>
                             <img src={`${image.path}`} alt={`Product Image`} className='w-24 h-24 md:w-32 md:h-32' style={{ objectFit: 'cover' }} />
                             <button
@@ -115,7 +129,8 @@ const ImageDropZone = ({ productId, onImageUpdate, ProductImages, isAddedProduct
                                 <FontAwesomeIcon icon={faRemove} />
                             </button>
                         </div>
-                    ))}
+                    ))
+                }
                 </div>
             </div>
         </div>

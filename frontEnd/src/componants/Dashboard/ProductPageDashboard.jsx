@@ -46,7 +46,7 @@ export default function SingleProduct() {
         const selectCategories = selectOptionCategory.current.children;
         for (let index = 0; index < selectCategories.length; index++) {
             const element = selectCategories[index];
-            if (element.value == product.category_id) {
+            if (element.value == product?.category_id) {
                 element.selected = true;
             }
         }

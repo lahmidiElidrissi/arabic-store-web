@@ -174,7 +174,9 @@ class ProductController extends Controller
         // Find the product
         if ($productId != "null")
            $product = Product::findOrFail($productId);
-       
+
+        $newImages = [];
+
         // Process each uploaded image
         foreach ($files as $images) {
             foreach ($images as $image) {
@@ -188,9 +190,10 @@ class ProductController extends Controller
                         'path' => $fullPath,
                     ]);
                 }else{
-                    $image = Image::create([
+                    $newImage = Image::create([
                         'path' => $fullPath,
                     ]);
+                    $newImages[] = $newImage;
                 }
             }
         }
@@ -198,8 +201,8 @@ class ProductController extends Controller
         // Return the updated list of images
         if($product)
         return response()->json(['images' => $product->images]);
-
-        return response()->json(['images' => [$image]]);
+        
+        return response()->json(['images' => $newImages]);
     }
 
     public function removeImage($produitId , $imageId)
